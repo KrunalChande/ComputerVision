@@ -1,0 +1,9 @@
+function A = computeAMatrix(points3D, points3D_normed)
+%computeAMatrix Compute 2nx12 A matrix as given in slides CS4495-Calibration.pdf
+%   
+
+A = 
+
+
+end
+
