@@ -63,7 +63,7 @@ for k = [8, 12, 16]
         
         % Find the Eigen Vector and create the M matrix
         [eVector, ~ ] = (eigs(A' * A, 1, 'sm'));
-        M_normA = vec2mat(eVector, 4);
+        M_normA_k = vec2mat(eVector, 4);
         
         k_2d_test = points2D(kInd(end-3:end), :);
         k_3d_test = points3D(kInd(end-3:end), :);
@@ -71,7 +71,7 @@ for k = [8, 12, 16]
         
         compare2Dpoints = zeros(3, size(k_3d_test,1));
         for i  = 1:size(k_3d_test,1)
-            compare2Dpoints(:,i) = M_normA * k_3d_test(i, :)';
+            compare2Dpoints(:,i) = M_normA_k * k_3d_test(i, :)';
             % Normalize it
             compare2Dpoints(:,i) = compare2Dpoints(:,i)./compare2Dpoints(3,i);
         end
@@ -82,7 +82,7 @@ for k = [8, 12, 16]
         residualError = PS3HelperFunctions.findResidual(compare2Dpoints, k_2d_test);
         
         if mean(residualError) < minResidualError
-            bestM = M_normA;
+            bestM = M_normA_k;
             minResidualError = mean(residualError);
             minK = k;
         end
@@ -100,3 +100,12 @@ disp('M with lowest residual error');
 disp(bestM)
 disp('Min k')
 disp(minK)
+
+%% SECTION 1.3 - Camera Center C
+Q = bestM(:,1:3)
+m_4 = bestM(:,4)
+C = - (inv(Q)) * m_4;
+disp('================= SECTION 1.3 =================')
+warning('Might be incorrect recheck');
+disp('C = ')
+disp(C)
