@@ -37,7 +37,7 @@ for i  = 1:4
     [Rmax, R] = PS4HelperFunctions.computeHarrisValue(I_x, I_y, a);
     Rmax
     %% SECTION 3
-    [posr,posc] = PS4HelperFunctions.doNonMaximalSupression(Rmax, R);
+    [posX, posY] = PS4HelperFunctions.doNonMaximalSupression(Rmax, R);
     figure(figureIndex),clf,set(gcf,'Name','Harris Corners'); figureIndex = figureIndex + 1;
-    imshow(img(:, :, i),[min(min(img(:, :, i))) max(max(img(:, :, i)))] ); hold on; plot(posr,posc,'g.');
+    imshow(img(:, :, i),[min(min(img(:, :, i))) max(max(img(:, :, i)))] ); hold on; plot(posX,posY,'g.');
 end
