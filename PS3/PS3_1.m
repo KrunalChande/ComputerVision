@@ -102,10 +102,10 @@ disp('Min k')
 disp(minK)
 
 %% SECTION 1.3 - Camera Center C
-Q = bestM(:,1:3)
-m_4 = bestM(:,4)
-C = - (inv(Q)) * m_4;
-disp('================= SECTION 1.3 =================')
-warning('Might be incorrect recheck');
-disp('C = ')
-disp(C)
+% Q = bestM(:,1:3)
+% m_4 = bestM(:,4)
+% C = - (inv(Q)) * m_4;
+% disp('================= SECTION 1.3 =================')
+% warning('Might be incorrect recheck');
+% disp('C = ')
+% disp(C)

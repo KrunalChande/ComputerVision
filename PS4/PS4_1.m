@@ -21,9 +21,9 @@ sigma = 1;
 % plot figures
 
 figure(figureIndex),clf,set(gcf,'Name','simA xyGradient'); figureIndex = figureIndex + 1;
-imshow([I_x_simA I_y_simA]);
+imshow([I_x_simA I_y_simA],[min(min(I_y_simA)) max(max(I_y_simA))] );
 figure(figureIndex),clf,set(gcf,'Name','transA xyGradient'); figureIndex = figureIndex + 1;
-imshow([I_x_transA I_y_transA]);
+imshow([I_x_transA I_y_transA], [min(min(I_x_transA)) max(max(I_x_transA))]);
 
 %% SECTION 2 - Compute Harris value for each of the images
 img = zeros([size(img_transA) 4]);
@@ -32,12 +32,13 @@ img(:, :, 2) = imread('Data/transB.jpg');
 img(:, :, 3) = img_simA;
 img(:, :, 4) = imread('Data/simB.jpg');
     a = 0.1;
-for i  = 1:4
+for i  = 3:4
     [ I_x, I_y] = PS4HelperFunctions.findXYGradients( img(:, :, i), windowSize, sigma, filter );
     [Rmax, R] = PS4HelperFunctions.computeHarrisValue(I_x, I_y, a);
     Rmax
     %% SECTION 3
     [posX, posY] = PS4HelperFunctions.doNonMaximalSupression(Rmax, R);
-    figure(figureIndex),clf,set(gcf,'Name','Harris Corners'); figureIndex = figureIndex + 1;
+%     figure(figureIndex),clf,set(gcf,'Name','Harris Corners'); figureIndex = figureIndex + 1;
+subplot(1,2,i-2);
     imshow(img(:, :, i),[min(min(img(:, :, i))) max(max(img(:, :, i)))] ); hold on; plot(posX,posY,'g.');
 end
