@@ -11,16 +11,19 @@ figureIndex = 1;
 % imgLeft = rgb2gray(im2double(imread('proj2-pair1-L.png')));
 % imgRight  = rgb2gray(im2double(imread('proj2-pair1-R.png')));
 imgLeft = (im2double(imread('Data/leftTest.png')));
-imgRight  = (im2double(imread('Data/leftTest.png')));
+imgRight  = (im2double(imread('Data/rightTest.png')));
 
+figure(figureIndex), clf; set(gcf,'Name','Input Image'); figureIndex = figureIndex + 1;
+subplot(1,2,1), imshow(imgLeft);
+subplot(1,2,2), imshow(imgRight);
 
-windowSize = 10;
+windowSize = 7;
 
-leftDispMap = helperFunctions.normCrossCorr(imgLeft, imgRight, windowSize);
+leftDispMap = helperFunctions.normCrossCorr(imgLeft, imgRight, windowSize, 16);
 figure(figureIndex), clf; set(gcf,'Name','Left Disparity Map'); figureIndex = figureIndex + 1;
 imshow(leftDispMap, [min(min(leftDispMap)) max(max(leftDispMap))]);
 
-rightDispMap = helperFunctions.normCrossCorr(imgRight, imgLeft, windowSize);
+rightDispMap = helperFunctions.normCrossCorr(imgRight, imgLeft, windowSize, 16);
 figure(figureIndex), clf; set(gcf,'Name','Right Disparity Map'); figureIndex = figureIndex + 1;
 imshow(rightDispMap, [min(min(rightDispMap)) max(max(rightDispMap))]);
 

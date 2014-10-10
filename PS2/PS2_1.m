@@ -17,20 +17,28 @@ windowSize = 3;
 
 
 %% Part a
+figure(1);
 
+subplot(2,2,1);
 leftDispMap = helperFunctions.SSD(imgLeft, imgRight, windowSize, maxDisparity);
-figure(figureIndex), clf; set(gcf,'Name','Left Disparity Map'); figureIndex = figureIndex + 1;
+% figure(figureIndex), clf; set(gcf,'Name','Left Disparity Map'); figureIndex = figureIndex + 1;
 imshow(leftDispMap, [min(min(leftDispMap)) max(max(leftDispMap))]);
+title('Left Disparity Map');
 
+subplot(2,2,2);
 rightDispMap = helperFunctions.SSD(imgRight, imgLeft, windowSize, maxDisparity);
-figure(figureIndex), clf; set(gcf,'Name','Right Disparity Map'); figureIndex = figureIndex + 1;
+% figure(figureIndex), clf; set(gcf,'Name','Right Disparity Map'); figureIndex = figureIndex + 1;
 imshow(rightDispMap, [min(min(rightDispMap)) max(max(rightDispMap))]);
+title('Right Disparity Map');
 
 %% Plot as 3D
 
-figure(figureIndex), clf; set(gcf,'Name','Left Disparity Map'); figureIndex = figureIndex + 1;
+subplot(2,2,3);
+% figure(figureIndex), clf; set(gcf,'Name','Left Disparity Map'); figureIndex = figureIndex + 1;
 surf(double(leftDispMap), 'FaceColor', 'interp', 'EdgeColor', 'none', 'FaceLighting', 'phong');
+title('Left Disparity Map 3D');
 
-
-figure(figureIndex), clf; set(gcf,'Name','Right Disparity Map'); figureIndex = figureIndex + 1;
+subplot(2,2,4);
+% figure(figureIndex), clf; set(gcf,'Name','Right Disparity Map'); figureIndex = figureIndex + 1;
 surf(double(rightDispMap), 'FaceColor', 'interp', 'EdgeColor', 'none', 'FaceLighting', 'phong');
+title('Right Disparity Map 3D');
