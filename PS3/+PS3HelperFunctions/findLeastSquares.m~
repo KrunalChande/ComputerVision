@@ -5,9 +5,8 @@ function solution = findLeastSquares(A)
         M_normA_k = vec2mat(eVector, 4);
 solution = eVector;
 
-[S V D] = svd(A);
+[S V D
 
-solution = D(:,9);
 
 end
 

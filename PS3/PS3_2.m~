@@ -11,17 +11,7 @@ pb = importdata('Data/pts2d-pic_b.txt');
 pa_1 = [pa ones(length(pa),1)];
 pb_1 = [pb ones(length(pb),1)];
 
-% A = [pa_1(1) * pb_1 pa_1(2) * pb_1 ones(length(pa),1) pa] ;
-
-for i = 1:length(pa_1)
-    u_ = pb_1(i,1);
-    v_ = pb_1(i,2);
-    u = pa_1(i,1);
-    v = pa_1(i,2);
-    A(i,:) =  [u_*u u_*v u_ v_*u v_*v v_ u v 1];
-end
-
-% A = [];
+A = [pa_1(1) * pb_1 pa_1(2) * pb_1 ones(length(pa),1) pa] ;
 
 %% SECTION 2.1 - Solve using least squares to generate an estimate for F
 F_all = PS3HelperFunctions.findLeastSquares(A);
@@ -42,41 +32,32 @@ disp('Rank of F_reducedRank = ')
 disp(rank(F_reducedRank))
 
 %% Section 2.3 - Find equipolar line l_b and l_a
-l_b = (F * pa_1')';
-l_a = (F' * pb_1')';
-% for i = 1:20
-% l_b(i,:) = l_b(i,:)./l_b(i,3);
-% l_a(i,:) = l_a(i,:)./l_a(i,3);
-% end
+
+l_b = (F * pa_1(1,:)')';
+l_a = (F * pb_1(1,:)')';
+
 pic_a = im2double(imread('Data/pic_a.jpg'));
 [height_a, width_a, ~] = size(pic_a);
 pic_b = im2double(imread('Data/pic_b.jpg'));
-[height_b, width_b, ~] = size(pic_b);
-% height_b = 1;
-% width_b = 1;
+% [height_b, width_b, ~] = size(pic_b);
+height_b = 1;
+width_b = 1;
 
-p_ul = [1 1 1];
-p_bl = [1 height_b  1];
-p_ur = [width_b 1 1];
-p_br = [width_b height_b  1];
+p_ul = [0 0 1];
+p_bl = [0 1 1];
+p_ur = [1 0 1];
+p_br = [1 1 1];
 
-l_L = cross(p_ul, p_bl)
-% l_L = l_L/l_L(3)
-l_R = cross(p_ur, p_br)
-% l_R = l_R/l_R(3)
-% l_L = [1 1 1];
-% l_R = [1072 1 1];
+l_L = cross(p_ul, p_bl);
+l_R = cross(p_ur, p_br);
 % l_R = [1 1 0];
-figure(1), 
-subplot(1,2,1); hold on;
-hImage = imshow(pic_b); hold on;
-
-for i = 1:20
-    p_bL = cross(l_b(i,:), l_L');
-    p_bL = p_bL./p_bL(3);
-    p_bR = cross(l_b(i,:), l_R');
-    p_bR = p_bR./p_bR(3);
-    subplot(1,2,1);
-        plot([p_bL(1) p_bR(1) ],[p_bL(2) p_bR(2)]);
+for i = 1:1
+    p_bL(i,:) = cross(l_b(i,:), l_L');
+    p_bL(i,:) = p_bL(i,:)./p_bL(i,:)
+    p_bR(i,:) = cross(l_b(i,:), l_R');
 end
-
+hImage = imshow(pic_b);
+for i = 1:20
+    hold on;
+    line(p_bL(i,1:2), p_bR(i,1:2));
+end

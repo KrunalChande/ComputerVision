@@ -21,7 +21,7 @@ sigma = 1;
 width = size(img(:, :, 1),2);
 maxNoOfInliers = 0;
 threshold = 20;
-for i  = 1:1
+for i  = 3:3
     %% Section 1 - Write a function to compute the angle.
     [ I_x_1, I_y_1] = PS4HelperFunctions.findXYGradients( img(:, :, i), windowSize, sigma, filter );
     [Rmax_1, R_1] = PS4HelperFunctions.computeHarrisValue(I_x_1, I_y_1, a);
@@ -154,15 +154,26 @@ for i  = 1:1
         
         if (noOfInliers2(RANSACIteration) > maxNoOfInliers)
             H_k_best = H_k
+            p1RandBest = p1_rand;
+            p2RandBest = p2_rand;
+            p2_Randshifted = [(p2RandBest(1)+width) p2RandBest(2)];
             noOfInliers2(RANSACIteration)
             maxNoOfInliers = noOfInliers2(RANSACIteration);
         end
         
     end
     
+    
+    
     % Recompute least squares estimate to find H on inliers
     
     
+        figure(figureIndex),clf,set(gcf,'Name','Ransac Figure'); figureIndex = figureIndex + 1;
+    imshow(combinedImages,[min(min(img(:, :, i+1))) max(max(img(:, :, i+1)))]); hold on;
+        x = [p1RandBest(1) p2_Randshifted(1)];
+    y = [p1RandBest(2) p2_Randshifted(2)];
+            plot(x,y,'Color','b','LineWidth',20)
+
     
 end
 
