@@ -1,39 +1,5 @@
 function dispMap = normCrossCorr(img, imgTemplate, windowSize, dispMax)
 
-% [yRows,xCols] = size(img);
-%
-% dispMin = 0;
-% dispMap=zeros(yRows, xCols);
-%
-% padSize = floor(windowSize/2);
-%
-% for y=1+padSize:1:yRows-padSize
-%     for x=1+padSize:1:xCols-padSize-dispMax
-%         prevNCC = 0.0;
-%         bestMatchSoFar = dispMin;
-%         for dispRange=dispMin:1:dispMax
-%             nccNumerator=0.0;
-%             nccDenominatorRightWindow=0.0;
-%             nccDenominatorLeftWindow=0.0;
-%             for a=-padSize:1:padSize
-%                 for b=-padSize:1:padSize
-%                    nccNumerator=nccNumerator+(imgTemplate(y+a,x+b)*img(y+a,x+b+dispRange));
-%                    nccDenominatorRightWindow=nccDenominatorRightWindow+(imgTemplate(y+a,x+b)*imgTemplate(y+a,x+b));
-%                    nccDenominatorLeftWindow=nccDenominatorLeftWindow+(img(y+a,x+b+dispRange)*img(y+a,x+b+dispRange));
-%                 end
-%             end
-%             nccDenominator=sqrt(nccDenominatorRightWindow*nccDenominatorLeftWindow);
-%             ncc=nccNumerator/nccDenominator;
-%             if (prevNCC < ncc)
-%                 prevNCC = ncc;
-%                 bestMatchSoFar = dispRange;
-%             end
-%         end
-%         dispMap(y,x) = bestMatchSoFar;
-%     end
-% end
-
-
 padSize= floor(windowSize/2) + dispMax;
 windowMax = floor(windowSize/2);
 
